@@ -43,7 +43,7 @@ class _LoginState extends State<Login> {
                   TextFormField(
                     controller: emailController,
                     decoration: const InputDecoration(
-                      label: Text('email'),
+                      label: Text('Email'),
                       border: OutlineInputBorder(),
                     ),
                     validator: (String? value) {

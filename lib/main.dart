@@ -1,3 +1,4 @@
+import 'package:chat_app/providers/user_provider.dart';
 import 'package:chat_app/services/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +27,14 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<FirebaseAuthService>(
-          create: (_) => FirebaseAuthService(FirebaseAuth.instance) // make auth service accessable from other providers
+          create: (context) => FirebaseAuthService(FirebaseAuth.instance) // make auth service accessable from other providers
         ),
         StreamProvider<User?>(
           create: (context) => context.read<FirebaseAuthService>().authStateChanges, // watches auth state from service provider
           initialData: null
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserProvider()
         ),
       ],
       child: MaterialApp(

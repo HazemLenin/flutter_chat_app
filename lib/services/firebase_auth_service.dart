@@ -6,6 +6,7 @@ class FirebaseAuthService {
   FirebaseAuthService(this._firebaseAuth);
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+  User? get currentUser => _firebaseAuth.currentUser;
 
   // Signin
   Future<String?> signIn({required String email, required String password}) async {
@@ -18,10 +19,10 @@ class FirebaseAuthService {
   }
 
   // Signup
-  Future<String?> signUp({required String email, required String password}) async {
+  Future<User?> signUp({required String email, required String password}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      return 'Signed up';
+      var user = (await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password)).user;
+      return user;
     } on FirebaseAuthException { // errors will be shown in widgets
       rethrow;
     }
