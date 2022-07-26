@@ -1,4 +1,5 @@
 import 'package:chat_app/providers/user_provider.dart';
+import 'package:chat_app/providers/message_provider.dart';
 import 'package:chat_app/services/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +34,11 @@ class MyApp extends StatelessWidget {
           create: (context) => context.read<FirebaseAuthService>().authStateChanges, // watches auth state from service provider
           initialData: null
         ),
-        ChangeNotifierProvider(
+        Provider<UserProvider>(
           create: (context) => UserProvider()
+        ),
+        Provider<MessageProvider>(
+          create: (context) => MessageProvider()
         ),
       ],
       child: MaterialApp(
