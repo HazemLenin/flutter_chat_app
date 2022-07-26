@@ -1,3 +1,4 @@
+import 'package:chat_app/providers/dark_theme_provider.dart';
 import 'package:chat_app/providers/user_provider.dart';
 import 'package:chat_app/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final authProvider = context.read<FirebaseAuthService>();
     final userProvider = context.read<UserProvider>();
+    final darkThemeProvider = context.read<DarkThemeProvider>();
 
     if (authProvider.currentUser?.displayName == null || authProvider.currentUser?.displayName == '') {
       return const UpdateDisplayName();
@@ -44,7 +46,27 @@ class _HomeState extends State<Home> {
               decoration: const BoxDecoration(
                 color: Colors.red,
               ),
-              child: Text(authProvider.currentUser?.email ?? '', style: const TextStyle(color: Colors.white)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(authProvider.currentUser?.displayName ?? '', style: const TextStyle(color: Colors.white)),
+                      Text(authProvider.currentUser?.email ?? '', style: const TextStyle(color: Colors.white70)),
+                    ],
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        darkThemeProvider.toggleDarkTheme();
+                      });
+                    },
+                    icon: Icon(darkThemeProvider.enabled ? Icons.dark_mode : Icons.light_mode)
+                  ),
+                ],
+              )
             ),
             ListTile(
               title: const Text('Signout'),

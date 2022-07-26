@@ -74,6 +74,7 @@ class _ChatPageState extends State<ChatPage> {
               Expanded(
                 flex: 3,
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(minimumSize: const Size(10, 60)),
                   onPressed: () {
                     messageProvider.sendMessage(Message(
                       uids: {

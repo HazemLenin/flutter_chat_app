@@ -22,9 +22,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Form(
