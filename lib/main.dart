@@ -1,3 +1,4 @@
+import 'package:chat_app/providers/dark_theme_provider.dart';
 import 'package:chat_app/providers/user_provider.dart';
 import 'package:chat_app/providers/message_provider.dart';
 import 'package:chat_app/services/firebase_auth_service.dart';
@@ -34,16 +35,14 @@ class MyApp extends StatelessWidget {
           create: (context) => context.read<FirebaseAuthService>().authStateChanges, // watches auth state from service provider
           initialData: null
         ),
-        Provider<UserProvider>(
-          create: (context) => UserProvider()
-        ),
-        Provider<MessageProvider>(
-          create: (context) => MessageProvider()
-        ),
+        Provider<UserProvider>(create: (context) => UserProvider()),
+        Provider<MessageProvider>(create: (context) => MessageProvider()),
+        ChangeNotifierProvider<DarkThemeProvider>(create: (context) => DarkThemeProvider()),
       ],
-      child: MaterialApp(
+      builder: (BuildContext context, child) => MaterialApp(
         title: 'Chat App',
         theme: ThemeData(
+          brightness: Provider.of<DarkThemeProvider>(context).enabled ? Brightness.dark : Brightness.light,
           primarySwatch: Colors.red,
         ),
         home: const SplashScreen(),
