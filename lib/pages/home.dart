@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'login.dart';
 import '../models/user_model.dart';
 import './update_display_name.dart';
+import './chat_page.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -33,18 +34,28 @@ class _HomeState extends State<Home> {
             },
             icon: const Icon(Icons.search),
           ),
-
-          // Signout button
-          TextButton(
-            onPressed: () {
-              authProvider.signOut();
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const Login()));
-            },
-          child: const Text('Signout', style: TextStyle(color: Colors.white))
-          ),
         ],
       ),
 
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Colors.red,
+              ),
+              child: Text(authProvider.currentUser?.email ?? '', style: const TextStyle(color: Colors.white)),
+            ),
+            ListTile(
+              title: const Text('Signout'),
+              onTap: () {
+                authProvider.signOut();
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const Login()));
+              },
+            )
+          ],
+        ),
+      ),
         // Stream all users
       body: StreamBuilder<List<UserModel>>(
         stream: userProvider.users,
@@ -60,8 +71,9 @@ class _HomeState extends State<Home> {
                   children: [
                     ListTile(
                       title: Text(snapshot.data?[index].displayName ?? ''),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatPage(contact: snapshot.data?[index]))),
                     ),
-                    const Divider(),
+                    const Divider(height: 0.0),
                   ]
                 );
               },
@@ -78,7 +90,6 @@ class _HomeState extends State<Home> {
 }
 
 class SearchPeoplDelegate extends SearchDelegate {
-  final UserProvider userProvider = UserProvider();
 
   @override
   Widget buildLeading(BuildContext context) => IconButton(
@@ -100,6 +111,7 @@ class SearchPeoplDelegate extends SearchDelegate {
   
   @override
   Widget buildSuggestions(BuildContext context) {
+    final UserProvider userProvider = context.read<UserProvider>();
     Stream<List<UserModel>> suggestionsStream = userProvider.filterUsersEmail(query);
 
     return StreamBuilder<List<UserModel>>(
@@ -111,6 +123,7 @@ class SearchPeoplDelegate extends SearchDelegate {
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(snapshot.data![index].email),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatPage(contact: snapshot.data?[index]))),
               );
             },
           );

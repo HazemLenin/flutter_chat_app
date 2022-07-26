@@ -1,10 +1,9 @@
 import 'package:chat_app/services/firestore_services.dart';
-import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 import '../models/user_model.dart';
 // import 'package:uuid/uuid.dart';
 
-class UserProvider with ChangeNotifier {
+class UserProvider {
   FirestoreService firestoreService = FirestoreService();
   // var uuid = const Uuid();
   // String? _uid;
