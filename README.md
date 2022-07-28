@@ -1,17 +1,23 @@
-# chat_app
+# Flutter Chat App
+Chat app app for users to connect to other users. 
 
-A new Flutter project.
+## Technologies used
+- Flutter
+- Firebase ( FireAuth & FireStore )
 
-## Getting Started
+## Starting the app
+1. First check that you have flutter sdk installed and run flutter doctor to check that you have all requirements.
+```cmd
+flutter -v
+flutter doctor
+```
 
-This project is a starting point for a Flutter application.
+2. Then install all required packages.
+```cmd
+flutter pub get
+```
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-"# flutter_chat_app" 
+3. You can now run the app.
+```cmd
+flutter run
+```
